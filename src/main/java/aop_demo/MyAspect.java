@@ -5,6 +5,10 @@ import org.aspectj.lang.annotation.*;
 
 @Aspect
 public class MyAspect {
+
+    @DeclareParents(value= "aop_demo.UserServiceImpl", defaultImpl=UserValidatorImpl.class)
+    public UserValidator userValidator;
+
     @Pointcut("execution(* aop_demo.UserServiceImpl.printUser(..))")
     public void cut() {}
 

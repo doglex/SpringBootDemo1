@@ -22,4 +22,18 @@ public class UserController {
         userService.printUser(user);
         return user;
     }
+
+    @ResponseBody
+    @RequestMapping("/vp")
+    public User validateAndPrint(Long id, String userName, String note) {
+        User user = new User();
+        user.setId(id);
+        user.setUsername(userName);
+        user.setNote(note);
+        UserValidator userValidator = (UserValidator) userService;
+        if (userValidator.validate(user)) {
+            userService.printUser(user);
+        }
+        return user;
+    }
 }
