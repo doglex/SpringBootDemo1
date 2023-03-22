@@ -1,7 +1,10 @@
 package aop_demo;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+
+import java.util.Arrays;
 
 @Aspect
 public class MyAspect {
@@ -12,8 +15,10 @@ public class MyAspect {
     @Pointcut("execution(* aop_demo.UserServiceImpl.printUser(..))")
     public void cut() {}
 
-    @Before("cut()")
-    public void before() {
+    @Before("cut() && args(user)")
+    public void before(JoinPoint p, User user) {
+        System.out.println("before user:" + user);
+        System.out.println("before p:" + Arrays.toString(Arrays.stream(p.getArgs()).toArray()));
         System.out.println("before -------");
     }
 
